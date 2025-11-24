@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  overflow-x: hidden;
+}
+
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+}
+
+/* Custom Cursor */
+.custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease;
+  mix-blend-mode: difference;
+}
+
+.custom-cursor-dot {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .stroke-text {
+    -webkit-text-stroke: 3px #00ff88;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease;
+  }
+  
+  .glitch {
+    position: relative;
+  }
+  
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .glitch-hover .glitch::before,
+  .glitch-hover .glitch::after {
+    opacity: 1;
+  }
+  
+  .glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 #00ff88;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+  }
+  
+  .glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 #00ff88, 2px 2px #00ff88;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim-2 1s infinite linear alternate-reverse;
+  }
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip: rect(31px, 9999px, 94px, 0);
+  }
+  20% {
+    clip: rect(54px, 9999px, 66px, 0);
+  }
+  40% {
+    clip: rect(28px, 9999px, 92px, 0);
+  }
+  60% {
+    clip: rect(67px, 9999px, 31px, 0);
+  }
+  80% {
+    clip: rect(23px, 9999px, 85px, 0);
+  }
+  100% {
+    clip: rect(39px, 9999px, 52px, 0);
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0% {
+    clip: rect(65px, 9999px, 100px, 0);
+  }
+  20% {
+    clip: rect(14px, 9999px, 33px, 0);
+  }
+  40% {
+    clip: rect(76px, 9999px, 73px, 0);
+  }
+  60% {
+    clip: rect(42px, 9999px, 60px, 0);
+  }
+  80% {
+    clip: rect(28px, 9999px, 87px, 0);
+  }
+  100% {
+    clip: rect(15px, 9999px, 14px, 0);
+  }
+}
+
+/* Diagonal Stripes Pattern */
+.diagonal-stripes {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 4px,
+    rgba(255, 255, 255, 0.1) 4px,
+    rgba(255, 255, 255, 0.1) 8px
+  );
+}
+
+.diagonal-stripes-dark {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 4px,
+    rgba(255, 255, 255, 0.05) 4px,
+    rgba(255, 255, 255, 0.05) 8px
+  );
+}
+
+/* Infinite Moving Cards Animation */
+@keyframes scroll {
+  to {
+    transform: translate(calc(-50% - 0.5rem));
+  }
+}
+
+.animate-scroll {
+  animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+}
