@@ -8,6 +8,8 @@ interface MagneticButtonProps {
   className?: string;
   onClick?: () => void;
   magneticStrength?: number;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 export default function MagneticButton({
@@ -15,6 +17,8 @@ export default function MagneticButton({
   className = "",
   onClick,
   magneticStrength = 0.3,
+  type = "button",
+  disabled = false,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLButtonElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -36,6 +40,8 @@ export default function MagneticButton({
   return (
     <motion.button
       ref={ref}
+      type={type}
+      disabled={disabled}
       className={`relative overflow-hidden ${className}`}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
