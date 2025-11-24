@@ -116,7 +116,7 @@ export default function AboutSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-gray-400 text-sm mb-4"
         >
-          //ABOUT ME
+          {'//ABOUT ME'}
         </motion.div>
 
         {/* Main Heading */}

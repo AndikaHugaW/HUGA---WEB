@@ -15,12 +15,12 @@ const faqs = [
   {
     id: 2,
     question: "How fast will I receive my work?",
-    answer: "Project timelines vary based on complexity. Typically, small projects take 1-2 weeks, while larger projects may take 4-8 weeks. I'll provide a detailed timeline during our initial consultation.",
+    answer: "Project timelines vary based on complexity. Typically, small projects take 1-2 weeks, while larger projects may take 4-8 weeks. I&apos;ll provide a detailed timeline during our initial consultation.",
   },
   {
     id: 3,
-    question: "What's your refund policy?",
-    answer: "I offer a satisfaction guarantee. If you're not happy with the initial design, we'll work together to make revisions. Full refunds are available within 48 hours of project start.",
+    question: "What&apos;s your refund policy?",
+    answer: "I offer a satisfaction guarantee. If you&apos;re not happy with the initial design, we&apos;ll work together to make revisions. Full refunds are available within 48 hours of project start.",
   },
   {
     id: 4,
