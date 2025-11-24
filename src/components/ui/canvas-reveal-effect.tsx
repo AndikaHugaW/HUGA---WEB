@@ -281,6 +281,7 @@ const ShaderMaterial = ({
     });
 
     return materialObject;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size.width, size.height, source]);
 
   return (

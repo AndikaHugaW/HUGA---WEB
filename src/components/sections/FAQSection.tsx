@@ -234,7 +234,7 @@ export default function FAQSection() {
 
             {/* Description */}
             <p className="text-gray-400 mb-8 leading-relaxed text-center text-sm">
-              Can't find the answer you're looking for? Please chat to our friendly team. We specialize in creating digital experiences that drive results.
+              Can&apos;t find the answer you&apos;re looking for? Please chat to our friendly team. We specialize in creating digital experiences that drive results.
             </p>
 
             {/* CTA Button */}

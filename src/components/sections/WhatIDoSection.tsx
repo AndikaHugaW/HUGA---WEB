@@ -89,7 +89,7 @@ export default function WhatIDoSection() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="text-gray-400 text-sm mb-8">//WHAT I DO?</div>
+            <div className="text-gray-400 text-sm mb-8">{'//WHAT I DO?'}</div>
             <div className="space-y-4">
               {services.map((service) => (
                 <button

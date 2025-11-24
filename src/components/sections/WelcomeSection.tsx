@@ -64,7 +64,7 @@ export default function WelcomeSection() {
           <div className="space-y-4 md:space-y-6 flex flex-col items-center justify-center w-full">
             <div className="w-full flex justify-center">
               <TextReveal
-                text="WELCOME TO MY PORTFOLIO! I'M"
+                text="WELCOME TO MY PORTFOLIO! I&apos;M"
                 variant="word"
                 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white uppercase leading-tight flex justify-center flex-wrap"
                 delay={0.3}
