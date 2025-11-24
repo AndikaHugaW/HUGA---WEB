@@ -20,7 +20,7 @@ const projects = [
     id: 2,
     title: "Revive AI",
     description: "Collaborated on a Webflow site with reusable components. With allowing to expand it over time to represent their brand.",
-    tags: ["API Integration", "Next.js", "Scikit-learn" ,"Scikit-learn"],
+    tags: ["API Integration", "Next.js", "Scikit-learn"],
     image: "/images/projects/revive-dasboard.png",
     link: "#",
     featured: false,
