@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 import TextReveal from "@/components/ui/TextReveal";
 import MagneticButton from "@/components/ui/MagneticButton";
 import { GridBackground } from "@/components/ui/GridBackground";
@@ -163,10 +164,14 @@ export default function ProjectsSection() {
             >
               {/* Image Area */}
               <div className="relative h-64 md:h-80 lg:h-96 overflow-hidden rounded-2xl">
-                <img
+                <Image
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  loading={index < 2 ? "eager" : "lazy"}
+                  quality={85}
                 />
                 {/* Navigation Button - Top Right */}
                 <motion.button

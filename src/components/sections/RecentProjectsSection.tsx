@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import TextReveal from "@/components/ui/TextReveal";
 import MagneticButton from "@/components/ui/MagneticButton";
 import { GridBackground } from "@/components/ui/GridBackground";
@@ -20,16 +21,16 @@ const featuredProjects = [
     category: "Machine Learning",
     date: "15 Aug. 2025",
     brand: "Revive AI",
-    image: "/images/projects/project-2.jpg",
+    image: "/images/projects/revive-dasboard.png",
     tags: ["Next.js", "Scikit-learn", "Figma"],
   },
   {
-    title: "Mobile App Design",
-    category: "Mobile Design",
+    title: "Honda Pekalongan Website",
+    category: "Website",
     date: "12 Aug. 2025",
-    brand: "AppFlow",
+    brand: "Honda",
     image: "/images/projects/project-3.jpg",
-    tags: ["React Native", "Firebase", "Figma"],
+    tags: ["Next.js", "supabase", "Figma"],
   },
   {
     title: "Brand Identity",
@@ -119,6 +120,21 @@ export default function RecentProjectsSection() {
     return () => clearInterval(interval);
   }, []);
 
+  // Preload gambar berikutnya untuk smooth transition
+  useEffect(() => {
+    const nextIndex = (currentIndex + 1) % featuredProjects.length;
+    const nextImage = featuredProjects[nextIndex].image;
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = nextImage;
+    document.head.appendChild(link);
+
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, [currentIndex]);
+
   const currentProject = featuredProjects[currentIndex];
 
   return (
@@ -191,12 +207,17 @@ export default function RecentProjectsSection() {
               className="absolute inset-0 min-h-[800px]"
             >
               {/* Background Image */}
-              <img
+              <Image
                 src={currentProject.image}
                 alt={currentProject.title}
-                className="absolute inset-0 w-full h-full object-cover"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = "/images/projects/revive-web.png";
+                fill
+                sizes="100vw"
+                className="object-cover"
+                loading="eager"
+                priority={currentIndex === 0}
+                quality={90}
+                onError={() => {
+                  // Fallback handled by Next.js Image
                 }}
               />
               {/* Overlay */}
