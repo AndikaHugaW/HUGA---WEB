@@ -2,9 +2,17 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import MagneticButton from "@/components/ui/MagneticButton";
 import TextReveal from "@/components/ui/TextReveal";
-import { Vortex } from "@/components/ui/vortex";
+
+// Dynamic import untuk komponen berat (Vortex dengan particle system)
+const Vortex = dynamic(() => import("@/components/ui/vortex").then(mod => ({ default: mod.Vortex })), {
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 bg-black" />
+  ),
+});
 
 export default function HeroSection() {
   const [hoveredText, setHoveredText] = useState<string | null>(null);
