@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import MagneticButton from "@/components/ui/MagneticButton";
 
 const navItems = [
@@ -49,9 +50,16 @@ export default function Navbar() {
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 z-10"
+            className="z-10"
           >
-            AHW
+            <Image
+              src="/images/logo/logo-huga.png"
+              alt="Huga Logo"
+              width={300}
+              height={100}
+              className="h-24 w-auto object-contain"
+              priority
+            />
           </motion.div>
 
           {/* Desktop Navigation - Centered */}
