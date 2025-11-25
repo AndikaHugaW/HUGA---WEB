@@ -12,7 +12,7 @@ const projects = [
     title: "Revive Website",
     description: "Platform kesehatan modern yang memudahkan pasien untuk konsultasi online, booking jadwal dokter, dan akses informasi medis terpercaya.",
     tags: ["Next.js", "Supabase", "Figma"],
-    image: "/images/projects/revive-web.png",
+    image: "/images/projects/revive-web-min.png",
     link: "#",
     featured: true,
   },

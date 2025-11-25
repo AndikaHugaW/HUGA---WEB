@@ -12,7 +12,7 @@ const featuredProjects = [
     category: "Next.js",
     date: "18 Aug. 2025",
     brand: "Revive",
-    image: "/images/projects/revive-web.png",
+    image: "/images/projects/revive-web-min.png",
     tags: ["Next.js", "Supabase", "Figma"],
   },
   {
