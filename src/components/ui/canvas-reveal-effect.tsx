@@ -194,44 +194,32 @@ const ShaderMaterial = ({
   uniforms: Uniforms;
 }) => {
   const { size } = useThree();
-  const ref = useRef<THREE.Mesh>();
+  const meshRef = useRef<THREE.Mesh>(null);
+  const lastFrameTimeRef = useRef(0);
+  const frameInterval = useMemo(() => 1 / maxFps, [maxFps]);
 
-  let lastFrameTime = 0;
-
-  useFrame(({ clock }) => {
-    if (!ref.current) return;
-    const timestamp = clock.getElapsedTime();
-    if (timestamp - lastFrameTime < 1 / maxFps) {
-      return;
-    }
-    lastFrameTime = timestamp;
-
-    const material: any = ref.current.material;
-    const timeLocation = material.uniforms.u_time;
-    timeLocation.value = timestamp;
-  });
-
-  const getUniforms = () => {
-    const preparedUniforms: any = {};
+  // Optimasi: useMemo untuk prepared uniforms agar tidak dibuat ulang
+  const preparedUniforms = useMemo(() => {
+    const prepared: any = {};
 
     for (const uniformName in uniforms) {
       const uniform: any = uniforms[uniformName];
 
       switch (uniform.type) {
         case "uniform1f":
-          preparedUniforms[uniformName] = { value: uniform.value, type: "1f" };
+          prepared[uniformName] = { value: uniform.value, type: "1f" };
           break;
         case "uniform3f":
-          preparedUniforms[uniformName] = {
+          prepared[uniformName] = {
             value: new THREE.Vector3().fromArray(uniform.value),
             type: "3f",
           };
           break;
         case "uniform1fv":
-          preparedUniforms[uniformName] = { value: uniform.value, type: "1fv" };
+          prepared[uniformName] = { value: uniform.value, type: "1fv" };
           break;
         case "uniform3fv":
-          preparedUniforms[uniformName] = {
+          prepared[uniformName] = {
             value: uniform.value.map((v: number[]) =>
               new THREE.Vector3().fromArray(v)
             ),
@@ -239,7 +227,7 @@ const ShaderMaterial = ({
           };
           break;
         case "uniform2f":
-          preparedUniforms[uniformName] = {
+          prepared[uniformName] = {
             value: new THREE.Vector2().fromArray(uniform.value),
             type: "2f",
           };
@@ -250,15 +238,32 @@ const ShaderMaterial = ({
       }
     }
 
-    preparedUniforms["u_time"] = { value: 0, type: "1f" };
-    preparedUniforms["u_resolution"] = {
+    prepared["u_time"] = { value: 0, type: "1f" };
+    prepared["u_resolution"] = {
       value: new THREE.Vector2(size.width * 2, size.height * 2),
     };
-    return preparedUniforms;
-  };
+    return prepared;
+  }, [uniforms, size.width, size.height]);
 
+  // Optimasi: useFrame dengan throttle yang lebih efisien
+  useFrame(({ clock }) => {
+    if (!meshRef.current) return;
+    
+    const timestamp = clock.getElapsedTime();
+    if (timestamp - lastFrameTimeRef.current < frameInterval) {
+      return;
+    }
+    lastFrameTimeRef.current = timestamp;
+
+    const material = meshRef.current.material as THREE.ShaderMaterial;
+    if (material.uniforms?.u_time) {
+      material.uniforms.u_time.value = timestamp;
+    }
+  });
+
+  // Optimasi: useMemo untuk material dan geometry agar tidak dibuat ulang
   const material = useMemo(() => {
-    const materialObject = new THREE.ShaderMaterial({
+    return new THREE.ShaderMaterial({
       vertexShader: `
       precision mediump float;
       in vec2 coordinates;
@@ -273,20 +278,21 @@ const ShaderMaterial = ({
       }
       `,
       fragmentShader: source,
-      uniforms: getUniforms(),
+      uniforms: preparedUniforms,
       glslVersion: THREE.GLSL3,
       blending: THREE.CustomBlending,
       blendSrc: THREE.SrcAlphaFactor,
       blendDst: THREE.OneFactor,
     });
+  }, [source, preparedUniforms]);
 
-    return materialObject;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [size.width, size.height, source]);
+  // Optimasi: useMemo untuk geometry agar tidak dibuat ulang
+  const geometry = useMemo(() => {
+    return new THREE.PlaneGeometry(2, 2);
+  }, []);
 
   return (
-    <mesh ref={ref as any}>
-      <planeGeometry args={[2, 2]} />
+    <mesh ref={meshRef} geometry={geometry}>
       <primitive object={material} attach="material" />
     </mesh>
   );
