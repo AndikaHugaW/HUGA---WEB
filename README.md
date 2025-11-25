@@ -1,6 +1,6 @@
-# AI Agency Portfolio - Porto Huga
+# Huga Website - Portofolio Web
 
-Website portofolio agency bertema AI dengan desain futuristik, cutting-edge, imersif, dan profesional.
+Website portofolio bertema AI dengan desain futuristik, cutting-edge, imersif, dan profesional.
 
 ## 🚀 Teknologi
 
