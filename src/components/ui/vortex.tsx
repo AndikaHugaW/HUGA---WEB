@@ -19,7 +19,7 @@ interface VortexProps {
 
 export const Vortex = (props: VortexProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const animationFrameId = useRef<number>();
   const particleCount = props.particleCount || 700;
   const particlePropCount = 9;
@@ -196,7 +196,7 @@ export const Vortex = (props: VortexProps) => {
     canvas: HTMLCanvasElement,
     ctx?: CanvasRenderingContext2D,
   ) => {
-    const container = containerRef.current as HTMLElement;
+    const container = containerRef.current;
     if (container) {
       const rect = container.getBoundingClientRect();
       canvas.width = rect.width;
